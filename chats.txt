@@ -1,0 +1,9 @@
+{
+    "query": "Open chrome, navigate to 'https://langchain-ai.github.io/langgraph/concepts/why-langgraph/', then click the 'enter' keyboard event,click on 'start with a prebuilt agent' fullxpath is '/html/body/div[3]/main/div/div[1]/div/div/nav/ul/li[1]/nav/ul/li[1]/nav/ul/li[1]/a/span', verify text with text 'LangGraph quickstart' must be equals to text at given fullxpath  '/html/body/div[3]/main/div/div[3]/article/h1' , verify text 'Anthropic' with text from given fullxpath '/html/body/div[3]/main/div/div[3]/article/ul[1]/li/a', click at xpath location '/html/body/div[3]/main/div/div[3]/article/ul[1]/li/a' "
+}
+
+
+
+{
+    "query": "Open chrome, navigate to 'https://www.heroku.com/', then click the 'enter' keyboard event,click on 'login' css selector is '#logged-out-login', enter into input as 'testuser' fullxpath is '/html/body/div[1]/div/div/div/form/div[1]/input', enter password as 'testing' xpath is '//*[@id='password']', click on login button xpath is '//*[@id='login']/form/button'"
+}

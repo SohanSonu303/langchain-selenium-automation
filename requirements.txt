@@ -1,0 +1,13 @@
+# --- Stable LangChain/LangGraph Versions (June 2024) ---
+langchain==0.2.1
+langchain-core==0.2.3
+langchain-openai==0.1.7
+langgraph==0.0.55
+
+# --- Core Application Dependencies ---
+fastapi
+uvicorn
+selenium
+undetected-chromedriver
+python-dotenv
+pydantic
