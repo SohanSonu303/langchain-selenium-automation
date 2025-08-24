@@ -7,3 +7,13 @@
 {
     "query": "Open chrome, navigate to 'https://www.heroku.com/', then click the 'enter' keyboard event,click on 'login' css selector is '#logged-out-login', enter into input as 'testuser' fullxpath is '/html/body/div[1]/div/div/div/form/div[1]/input', enter password as 'testing' xpath is '//*[@id='password']', click on login button xpath is '//*[@id='login']/form/button'"
 }
+
+
+{
+    "query": "Open chrome and navigate to 'https://www.screener.in/explore/'. verify text on 'Stock screens' at xpath '/html/body/div/div[2]/main/div[1]/h1'. Then click on xpath '/html/body/div/div[2]/main/div[2]/div/a[1]/div'. verift text 'Low on 10 year average earnings' at xpath '#screen-info > h1'. then input 'Market Capitalization /  Average Earnings 10Year < 15 AND Average dividend payout 3years > 20 AND Debt to equity < .2 AND Average return on capital employed 7Years > 30' into this element xpath is '//*[@id='query-builder']h1'. then click on button xpath is '/html/body/main/div[2]/form/div[3]/button[1]'."
+}
+
+
+{
+    "query": "Open chrome and navigate to 'https://www.imdb.com/'. verify text on 'Top News' at xpath '//*[@id='__next']/main/div/div[3]/div[7]/div/section[3]/div/div[1]/a/h3'. click on element at xpath is '//*[@id='__next']/main/div/div[3]/div[7]/div/section[3]/div/div[2]/div/div[1]/div[1]/a/div[2]/div[1]'. send keys into input 'game of thrones' xpath is '//*[@id='suggestion-search']'. then click on search xpath '//*[@id='suggestion-search-button']'. verify text 'Game of Thrones: Costumes' css selector is '#__next > main > div.ipc-page-content-container.ipc-page-content-container--full.sc-8b4a7eec-0.loYWEn > div.ipc-page-content-container.ipc-page-content-container--center > section > div > div.ipc-page-grid__item.ipc-page-grid__item--span-2 > section:nth-child(4) > div.sc-bf2a2581-2.gfiyUT > ul > li:nth-child(2) > div.ipc-metadata-list-summary-item__c > div > a'."
+}
