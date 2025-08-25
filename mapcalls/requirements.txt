@@ -1,0 +1,15 @@
+# requirements.txt
+
+# Use modern Langchain versions built for Pydantic v2
+langchain>=0.2.0
+langchain-core>=0.2.0
+langchain-openai>=0.1.7
+
+# Core library for the agent (which requires Pydantic v2)
+mcp-use
+
+# For loading environment variables from a .env file
+python-dotenv
+
+# The OpenAI client library
+openai
