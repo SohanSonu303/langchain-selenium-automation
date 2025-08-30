@@ -1,0 +1,101 @@
+[
+  {
+    "id": "evt-1756444288776-d5sqe",
+    "target": {
+      "selector": "nav#global-nav-desktop > div:nth-of-type(2) > div > ul > li > a > span > svg > path:nth-of-type(4)",
+      "xpath": "id(\"global-nav-desktop\")/DIV[2]/DIV[1]/UL[1]/LI[1]/A[1]/SPAN[1]/svg[1]/path[4]"
+    },
+    "timestamp": 1756444288776,
+    "type": "click",
+    "url": "https://aws.amazon.com/?nc2=h_home",
+    "value": null
+  },
+  {
+    "id": "evt-1756444291666-dzjmv",
+    "target": {
+      "selector": "nav#global-nav-desktop > div:nth-of-type(2) > div > ul > li:nth-of-type(4) > button > div > span",
+      "xpath": "id(\"global-nav-desktop\")/DIV[2]/DIV[1]/UL[1]/LI[4]/BUTTON[1]/DIV[1]/SPAN[1]"
+    },
+    "timestamp": 1756444291666,
+    "type": "click",
+    "url": "https://aws.amazon.com/?nc2=h_home",
+    "value": null
+  },
+  {
+    "id": "evt-1756444296008-arby7",
+    "target": {
+      "selector": "nav#global-nav-desktop > div:nth-of-type(4) > div > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > div:nth-of-type(6) > a > div > div > div",
+      "xpath": "id(\"global-nav-desktop\")/DIV[4]/DIV[1]/DIV[2]/DIV[1]/DIV[1]/DIV[2]/DIV[1]/DIV[1]/DIV[6]/A[1]/DIV[1]/DIV[1]/DIV[1]"
+    },
+    "timestamp": 1756444296008,
+    "type": "click",
+    "url": "https://aws.amazon.com/?nc2=h_home",
+    "value": null
+  },
+  {
+    "id": "evt-1756444310855-4c0db",
+    "target": {
+      "selector": "div#container-9685f31766 > div:nth-of-type(2) > div > div > div > span > div > div > div > div > div > div:nth-of-type(2) > div > div > div > a > div > span",
+      "xpath": "id(\"container-9685f31766\")/DIV[2]/DIV[1]/DIV[1]/DIV[1]/SPAN[1]/DIV[1]/DIV[1]/DIV[1]/DIV[1]/DIV[1]/DIV[2]/DIV[1]/DIV[1]/DIV[1]/A[1]/DIV[1]/SPAN[1]"
+    },
+    "timestamp": 1756444310855,
+    "type": "click",
+    "url": "https://aws.amazon.com/ec2/?nc2=h_prod_fs_ec2",
+    "value": null
+  },
+  {
+    "id": "evt-1756444319024-jow8w",
+    "target": {
+      "selector": "button#search-toggle > p > span > svg",
+      "xpath": "id(\"search-toggle\")/P[1]/SPAN[1]/svg[1]"
+    },
+    "timestamp": 1756444319024,
+    "type": "click",
+    "url": "https://aws.amazon.com/ec2/pricing/?loc=ft#Free_tier",
+    "value": null
+  },
+  {
+    "id": "evt-1756444323768-2t1qx",
+    "target": {
+      "selector": "input#floating-ui-z7bg9",
+      "xpath": "id(\"floating-ui-z7bg9\")"
+    },
+    "timestamp": 1756444323768,
+    "type": "click",
+    "url": "https://aws.amazon.com/ec2/pricing/?loc=ft#Free_tier",
+    "value": null
+  },
+  {
+    "id": "evt-1756444326198-sgq9x",
+    "target": {
+      "selector": "input#floating-ui-z7bg9",
+      "xpath": "id(\"floating-ui-z7bg9\")"
+    },
+    "timestamp": 1756444329941,
+    "type": "type",
+    "url": "https://aws.amazon.com/ec2/pricing/?loc=ft#Free_tier",
+    "value": "getting ec2 DB"
+  },
+  {
+    "id": "evt-1756444334123-7qrqv",
+    "target": {
+      "selector": "input#floating-ui-z7bg9",
+      "xpath": "id(\"floating-ui-z7bg9\")"
+    },
+    "timestamp": 1756444334123,
+    "type": "change",
+    "url": "https://aws.amazon.com/ec2/pricing/?loc=ft#Free_tier",
+    "value": "getting ec2 DB"
+  },
+  {
+    "id": "evt-1756444334248-936os",
+    "target": {
+      "selector": "nav#global-nav-desktop > div:nth-of-type(2) > div > ul:nth-of-type(2) > li > div > div > div > div > div:nth-of-type(2) > div > div > a",
+      "xpath": "id(\"global-nav-desktop\")/DIV[2]/DIV[1]/UL[2]/LI[1]/DIV[1]/DIV[1]/DIV[1]/DIV[1]/DIV[2]/DIV[1]/DIV[1]/A[1]"
+    },
+    "timestamp": 1756444334248,
+    "type": "click",
+    "url": "https://aws.amazon.com/ec2/pricing/?loc=ft#Free_tier",
+    "value": null
+  }
+]

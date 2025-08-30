@@ -23,4 +23,13 @@
   "query": "Open imdb.com, then type for 'Game of Thrones' in input at xpath '//*[@id='suggestion-search']'. click on search button . Verify text strictly 'Game of Thrones' within this div element xpath is '//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[2]/div[2]' and click 'Game of Thrones'. then check rating is > '9' at xpath '//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[1]/a/span/div/div[2]/div[1]/span[1]'. click on 'episodes' 'h3' tag. then click on '8' tab xpath is '//*[@id='__next']/main/div/section/div/section/div/div[1]/section[2]/section[1]/div[2]/ul/a[8]'. verify text 'S8.E1 ∙ Winterfell' .then close browser"
 }
 
+{
+  "query": "Open imdb.com, then type 'game of thrones' in the search bar. then click the search button . Verify text strictly 'Game of Thrones' within this div element xpath is '//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[2]/div[2]' and click 'Game of Thrones'. then check rating from xpath '/html/body/div[2]/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[1]/a/span/div/div[2]/div[1]' is '> 9'. click on 'episodes' 'h3' tag. then click on '8' tab xpath is '//*[@id='__next']/main/div/section/div/section/div/div[1]/section[2]/section[1]/div[2]/ul/a[8]'. verify text 'S8.E1 ∙ Winterfell' .then close browser",
+  "context_filename": "imdb_actions.json"
+}
 
+
+{
+  "query": "Navigate to the Indian Microsoft website. Find the 'All Microsoft' button in the header and click it. A menu should open; from that menu, verify text and click on the 'Microsoft Cloud' link. verify text 'Products' and then click on the main 'Products' link. Next, find and click the button for 'Azure'. On the Azure page, click the sign-in button. type 'newuser101@gmail.com' into the input field xpath is '//*[@id='i0116']'. When you are done, close the browser.",
+  "context_filename": "azure_action_annotated.json"
+}

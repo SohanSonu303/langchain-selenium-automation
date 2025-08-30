@@ -1,0 +1,167 @@
+[
+  {
+    "id": "evt-1756535545901-latpi",
+    "target": {
+      "selector": "a#uhfLogo > img",
+      "xpath": "id(\"uhfLogo\")/IMG[1]"
+    },
+    "timestamp": 1756535545901,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/",
+    "value": null
+  },
+  {
+    "id": "evt-1756535550129-gwzpl",
+    "target": {
+      "selector": "nav#uhf-c-nav > ul > li > div > button > span",
+      "xpath": "id(\"uhf-c-nav\")/UL[1]/LI[1]/DIV[1]/BUTTON[1]/SPAN[1]"
+    },
+    "timestamp": 1756535550129,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/",
+    "value": null
+  },
+  {
+    "id": "evt-1756535552167-ut1s0",
+    "target": {
+      "selector": "a#shellmenu_24",
+      "xpath": "id(\"shellmenu_24\")"
+    },
+    "timestamp": 1756535552167,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/",
+    "value": null
+  },
+  {
+    "id": "evt-1756535558688-xl37r",
+    "target": {
+      "selector": "button#c-shellmenu_41",
+      "xpath": "id(\"c-shellmenu_41\")"
+    },
+    "timestamp": 1756535558688,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/microsoft-cloud",
+    "value": null
+  },
+  {
+    "id": "evt-1756535561523-xmm7i",
+    "target": {
+      "selector": "button#c-shellmenu_65",
+      "xpath": "id(\"c-shellmenu_65\")"
+    },
+    "timestamp": 1756535561523,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/microsoft-cloud",
+    "value": null
+  },
+  {
+    "id": "evt-1756535562945-48m8w",
+    "target": {
+      "selector": "a#c-shellmenu_67",
+      "xpath": "id(\"c-shellmenu_67\")"
+    },
+    "timestamp": 1756535562945,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/microsoft-cloud",
+    "value": null
+  },
+  {
+    "id": "evt-1756535568608-d3qwh",
+    "target": {
+      "selector": "a#action-oc18e3 > span",
+      "xpath": "id(\"action-oc18e3\")/SPAN[1]"
+    },
+    "timestamp": 1756535568608,
+    "type": "click",
+    "url": "https://azure.microsoft.com/en-us/",
+    "value": null
+  },
+  {
+    "id": "evt-1756535575078-houg1",
+    "target": {
+      "selector": "a#c-shellmenu_custom_button_outline_newtab_signin_bhvr100_right",
+      "xpath": "id(\"c-shellmenu_custom_button_outline_newtab_signin_bhvr100_right\")"
+    },
+    "timestamp": 1756535575078,
+    "type": "click",
+    "url": "https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account/",
+    "value": null
+  },
+  {
+    "id": "evt-1756535584465-nceey",
+    "target": {
+      "selector": "a#uhfLogo > img",
+      "xpath": "id(\"uhfLogo\")/IMG[1]"
+    },
+    "timestamp": 1756535584465,
+    "type": "click",
+    "url": "https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account/",
+    "value": null
+  },
+  {
+    "id": "evt-1756535590063-deos1",
+    "target": {
+      "selector": "button#search",
+      "xpath": "id(\"search\")"
+    },
+    "timestamp": 1756535590063,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/",
+    "value": null
+  },
+  {
+    "id": "evt-1756535593111-u9aij",
+    "target": {
+      "selector": "input#cli_shellHeaderSearchInput",
+      "xpath": "id(\"cli_shellHeaderSearchInput\")"
+    },
+    "timestamp": 1756535593111,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/",
+    "value": null
+  },
+  {
+    "id": "evt-1756535594229-k608m",
+    "target": {
+      "selector": "input#cli_shellHeaderSearchInput",
+      "xpath": "id(\"cli_shellHeaderSearchInput\")"
+    },
+    "timestamp": 1756535595254,
+    "type": "type",
+    "url": "https://www.microsoft.com/en-in/",
+    "value": "compute"
+  },
+  {
+    "id": "evt-1756535597512-en6af",
+    "target": {
+      "selector": "input#cli_shellHeaderSearchInput",
+      "xpath": "id(\"cli_shellHeaderSearchInput\")"
+    },
+    "timestamp": 1756535597512,
+    "type": "change",
+    "url": "https://www.microsoft.com/en-in/",
+    "value": "compute"
+  },
+  {
+    "id": "evt-1756535597615-lmfg5",
+    "target": {
+      "selector": "button#search",
+      "xpath": "id(\"search\")"
+    },
+    "timestamp": 1756535597615,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/",
+    "value": null
+  },
+  {
+    "id": "evt-1756535605797-lkplg",
+    "target": {
+      "selector": "div#rootContainer_Search > div > div:nth-of-type(4) > div > ul > li > div > div > h4 > a",
+      "xpath": "id(\"rootContainer_Search\")/DIV[1]/DIV[4]/DIV[1]/UL[1]/LI[1]/DIV[1]/DIV[1]/H4[1]/A[1]"
+    },
+    "timestamp": 1756535605797,
+    "type": "click",
+    "url": "https://www.microsoft.com/en-in/search/explore?q=compute",
+    "value": null
+  }
+]
