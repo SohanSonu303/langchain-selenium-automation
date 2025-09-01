@@ -482,30 +482,74 @@ tools = [
 llm = ChatOpenAI(temperature=0, model_name="gpt-4o-mini")
 model_with_tools = llm.bind_tools(tools)
 
+# --- NEW: Helper function to determine and log the agent's strategy ---
+def _get_tool_call_strategy(tool_call: dict, context_xpaths: set) -> str:
+    """Determines the operational strategy based on the tool call and context."""
+    tool_name = tool_call.get('name')
+    tool_args = tool_call.get('args', {})
+
+    # Element discovery strategies
+    if tool_name == 'find_interactive_element':
+        return "Element Discovery (Scoped Search - Rule C)" if tool_args.get('container_xpath') else "Element Discovery (General Search - Rule D)"
+
+    # Direct action strategies based on selector source
+    action_tools = [
+        'click_element', 'send_keys_to_element', 'verify_text_on_element',
+        'get_element_attribute', 'select_dropdown_option', 'press_key_on_element'
+    ]
+    if tool_name in action_tools:
+        if tool_args.get('by') == 'xpath' and tool_args.get('value') in context_xpaths:
+            return "Direct Action (from Context - Rule B)"
+        # Any other direct action is assumed to be Rule A or a follow-up from a previous search
+        return "Direct Action (from Selector - Rule A/D)"
+
+    # Browser control strategies
+    browser_control_tools = ['start_browser', 'maximize_window', 'close_browser', 'navigate_to_url']
+    if tool_name in browser_control_tools:
+        return f"Browser Control ({tool_name.replace('_', ' ').title()})"
+
+    # Synchronization strategies
+    sync_tools = ['wait_for_seconds', 'wait_for_page_load']
+    if tool_name in sync_tools:
+        return "Synchronization (Wait)"
+
+    # Page interaction strategies
+    if tool_name == 'scroll_page':
+        return "Page Interaction (Scroll)"
+
+    return "Unknown/General Action"
+
+# --- REWRITTEN: agent_node with improved logging ---
 def agent_node(state: AgentState):
-    """Invokes the LLM and logs the decision-making process based on its response."""
+    """Invokes the LLM, determines the strategy for any tool calls, and logs the decision."""
     response = model_with_tools.invoke(state["messages"])
-    
+
     if tool_calls := response.tool_calls:
-        context_events = state.get("context_events", [])
-        context_xpaths = {event['target']['xpath'] for event in context_events if 'target' in event and 'xpath' in event['target']}
+        context_events = state.get("context_events", []) or []
+        # Robustly extract XPaths from context
+        context_xpaths = {
+            event['target']['xpath']
+            for event in context_events
+            if isinstance(event, dict) and 'target' in event and isinstance(event.get('target'), dict) and 'xpath' in event['target']
+        }
+
+        logger.info("="*80)
+        logger.info("LLM has decided on the next action(s):")
 
         for call in tool_calls:
-            tool_name = call['name']
-            tool_args = call['args']
-            log_message = f"LLM decided to call tool '{tool_name}' with args: {tool_args}"
-            
-            strategy = "Unknown"
-            if tool_name == 'find_interactive_element':
-                strategy = "Rule C (Scoped Search)" if tool_args.get('container_xpath') else "Rule D (General Search)"
-            elif tool_name in ['click_element', 'send_keys_to_element', 'verify_text_on_element', 'get_element_attribute']:
-                if tool_args.get('by') == 'xpath' and tool_args.get('value') in context_xpaths:
-                    strategy = "Rule B (Contextual Search from JSON)"
-                else:
-                    strategy = "Rule A (Direct Selector)"
-            logger.info(f"-------------STRATEGY: {strategy} ----------> {log_message}-------------")
-            
+            strategy = _get_tool_call_strategy(call, context_xpaths)
+            tool_name = call.get('name', 'N/A')
+            tool_args = call.get('args', {})
+
+            # Log with a more structured and readable format
+            logger.info(f"  - Tool Call: {tool_name}")
+            logger.info(f"    - Strategy: {strategy}")
+            # Pretty-print parameters for readability
+            logger.info(f"    - Parameters: {json.dumps(tool_args, indent=4)}")
+        logger.info("="*80)
+
     return {"messages": [response]}
+
 
 # --- UPDATED: Added a 2-second delay after each tool call ---
 def tool_node(state: AgentState):
