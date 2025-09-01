@@ -628,7 +628,7 @@ async def automate(request: AutomationRequest):
 
     2.  **Find Elements with Precision (Strict Priority Order):**
         - **Rule A (Direct Selector):** If the user provides a full, direct XPath/CSS selector, use it immediately with tools like `click_element`.
-        - **Rule B (Contextual Search):** If a "Context from Chrome Extension" is provided, first try to find a matching element in the JSON. If a match is found, use its `xpath`.
+        - **Rule B (Contextual Search from Description):** If a "Context from Chrome Extension" is provided, your primary strategy is to find the most relevant past event. Read through the list of JSON objects. For each object, compare your current task to its `element_description`. Find the object with the description that semantically matches your goal the best. Once you find the closest match, you MUST take the `xpath` from its `target` and use that for your next action (e.g., `click_element(by='xpath', value='...')`).
         - **Rule C (Scoped Search):** If the user asks to find an element *inside* another, use the `find_interactive_element` tool with both `element_query` and `container_xpath`.
         - **Rule D (General Search):** If the above methods don't apply, use `find_interactive_element` with only the `element_query` to find the element on the page.
 
