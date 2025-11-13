@@ -1,0 +1,266 @@
+Of course. Here is the complete code for a Chrome extension that captures network requests based on your specified JSON structure, stores them in local storage, and sends them to a server when the user clicks "Stop."
+
+### Overview of the Extension's Logic
+
+1.  **User Interface (Popup)**: The user clicks a "Start Capturing" button to begin the process. The extension then attaches a debugger to the active tab.
+2.  **Capturing Data (`background.js`)**: While the user navigates and interacts with a website, the extension listens for all network requests. For each completed request, it gathers the URL, method, headers, request body, response status, response headers, and response body.
+3.  **Local Storage**: Each captured API call is formatted into the desired JSON object and temporarily stored in Chrome's local storage. This ensures data isn't lost if the browser is closed unexpectedly.
+4.  **Stopping and Sending**: When the user clicks "Stop Capturing," the extension detaches the debugger, retrieves all the captured data from local storage, and sends it as a single JSON array to your backend service.
+
+---
+
+### Step 1: `manifest.json`
+
+This file defines the permissions and structure of your extension. The `storage` permission is added to allow saving data locally.
+
+```json
+{
+  "name": "API Performance Capturer",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Captures API requests and sends them to a performance testing service.",
+  "permissions": [
+    "debugger",
+    "tabs",
+    "storage",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
+}
+```
+
+### Step 2: `popup.html`
+
+This is the simple user interface with "Start" and "Stop" buttons.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Capturer</title>
+  <style>
+    body {
+      width: 250px;
+      text-align: center;
+      font-family: sans-serif;
+    }
+    button {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #status {
+      font-weight: bold;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h3>API Performance Capture</h3>
+  <div id="status">Status: Idle</div>
+  <button id="start">Start Capturing</button>
+  <button id="stop">Stop Capturing</button>
+  <script src="popup.js"></script>
+</body>
+</html>
+```
+
+### Step 3: `popup.js`
+
+This script sends messages to the background script to start/stop capturing and updates the status text in the popup.
+
+```javascript
+const startButton = document.getElementById('start');
+const stopButton = document.getElementById('stop');
+const statusDiv = document.getElementById('status');
+
+startButton.addEventListener('click', () => {
+  chrome.runtime.sendMessage({ command: "start" }, (response) => {
+    if (response && response.status === "started") {
+      statusDiv.textContent = 'Status: Capturing...';
+    }
+  });
+});
+
+stopButton.addEventListener('click', () => {
+  chrome.runtime.sendMessage({ command: "stop" }, (response) => {
+    if (response && response.status === "stopped") {
+      statusDiv.textContent = 'Status: Data Sent!';
+    } else if (response && response.status === "error") {
+      statusDiv.textContent = 'Status: Error Sending Data.';
+    }
+  });
+});
+```
+
+### Step 4: `background.js` (The Core Logic)
+
+This is where all the magic happens. It manages the debugger, listens to network events, formats the data, and interacts with local storage and the backend.
+
+```javascript
+let debugee = null;
+const backendUrl = 'https://your-backend-service.com/api/capture'; // <-- IMPORTANT: REPLACE WITH YOUR URL
+const capturedRequests = {};
+
+// Listen for messages from the popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.command === "start") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length === 0) return;
+      debugee = { tabId: tabs[0].id };
+      chrome.debugger.attach(debugee, "1.3", onAttach);
+    });
+    sendResponse({ status: "started" });
+  } else if (request.command === "stop") {
+    if (debugee) {
+      chrome.debugger.detach(debugee, onDetach);
+      debugee = null;
+      sendResponse({ status: "stopped" });
+    }
+  }
+  return true; // Indicates that the response is sent asynchronously
+});
+
+function onAttach() {
+  if (chrome.runtime.lastError) {
+    console.error(chrome.runtime.lastError);
+    return;
+  }
+  // Clear any old data and start fresh
+  chrome.storage.local.set({ apiCalls: [] }, () => {
+    console.log("Storage cleared. Starting capture.");
+  });
+  chrome.debugger.sendCommand(debugee, "Network.enable");
+}
+
+function onDetach() {
+  console.log("Debugger detached. Sending data to server.");
+  sendDataToServer();
+}
+
+// Listen for all debugger events
+chrome.debugger.onEvent.addListener((source, method, params) => {
+  if (!debugee || source.tabId !== debugee.tabId) {
+    return;
+  }
+
+  if (method === 'Network.requestWillBeSent') {
+    // Store request info temporarily
+    capturedRequests[params.requestId] = {
+      request: {
+        url: params.request.url,
+        method: params.request.method,
+        headers: params.request.headers,
+        body: params.request.postData,
+      },
+      startTime: params.timestamp,
+    };
+  }
+
+  if (method === 'Network.responseReceived') {
+    const requestInfo = capturedRequests[params.requestId];
+    if (!requestInfo) return;
+
+    const endTime = Date.now();
+    const responseTime = endTime - (requestInfo.startTime * 1000); // Convert timestamp to ms
+
+    // Get the response body
+    chrome.debugger.sendCommand(
+      debugee,
+      'Network.getResponseBody',
+      { requestId: params.requestId },
+      (responseBody) => {
+        if (chrome.runtime.lastError) {
+            console.error("Could not get response body:", chrome.runtime.lastError.message);
+        }
+        
+        const apiCallData = {
+          request: requestInfo.request,
+          response: {
+            statusCode: params.response.status,
+            headers: params.response.headers,
+            body: responseBody ? (responseBody.base64Encoded ? atob(responseBody.body) : responseBody.body) : null,
+          },
+          performance: {
+            responseTime: Math.round(responseTime),
+            // Throughput would typically be calculated on the server side
+            throughput: null,
+          },
+        };
+
+        // Save to local storage
+        chrome.storage.local.get('apiCalls', (data) => {
+          const updatedApiCalls = data.apiCalls || [];
+          updatedApiCalls.push(apiCallData);
+          chrome.storage.local.set({ apiCalls: updatedApiCalls });
+        });
+
+        // Clean up the temporary store
+        delete capturedRequests[params.requestId];
+      }
+    );
+  }
+});
+
+function sendDataToServer() {
+  chrome.storage.local.get('apiCalls', (data) => {
+    const apiCalls = data.apiCalls;
+    if (!apiCalls || apiCalls.length === 0) {
+      console.log("No data to send.");
+      return;
+    }
+
+    fetch(backendUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(apiCalls),
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('Successfully sent data to the backend.');
+        // Clear storage after successful send
+        chrome.storage.local.remove('apiCalls');
+      } else {
+        console.error('Failed to send data. Server responded with:', response.status);
+      }
+    })
+    .catch(error => {
+      console.error('Error sending data to backend:', error);
+    });
+  });
+}```
+
+### Step 5: Add Icons
+
+Create a folder named `images` in your extension's directory and add some placeholder icons (e.g., `icon16.png`, `icon48.png`, `icon128.png`).
+
+### How to Load and Use the Extension
+
+1.  **Save the files**: Create a new folder and save the files as `manifest.json`, `popup.html`, `popup.js`, and `background.js`. Create an `images` subfolder and add your icons.
+2.  **Open Chrome Extensions**: Go to `chrome://extensions`.
+3.  **Enable Developer Mode**: Turn on the "Developer mode" toggle in the top-right corner.
+4.  **Load the Extension**: Click "Load unpacked" and select the folder where you saved your files.
+5.  **Pin the Extension**: Find the extension in your toolbar and pin it for easy access.
+6.  **Start Capturing**: Navigate to a website, click the extension icon, and click "Start Capturing". A notification bar will appear at the top of the page indicating that the debugger is active.
+7.  **Perform Actions**: Interact with the website as a normal user. The extension will capture all network requests in the background.
+8.  **Stop and Send**: Click the extension icon again and click "Stop Capturing". The captured data will be sent to the URL you configured in `background.js`. You can check the background script's console for logs (via `chrome://extensions` > Your Extension > "Service Worker" link).
